@@ -138,15 +138,333 @@
         .wrapper {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: 1fr auto;
+            grid-template-rows: 1fr auto auto;
             height: 630px;
             width: 360px;
             overflow: hidden;
-            padding: 0;
-            gap: 0;
-            align-items: center;
-            justify-items: center;
+            padding: 10px;
+            gap: 10px;
+            align-items: stretch;
+            justify-items: stretch;
+            position: relative;
+            box-sizing: border-box;
         }
+
+        /* 3D viewer area */
+        .guide-card {
+            grid-column: 1 / -1;
+            grid-row: 1;
+            width: 100%;
+            min-height: 260px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(20,20,20,0.70), rgba(10,10,10,0.78));
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+            padding: 14px;
+            box-sizing: border-box;
+            color: #f1f1f1;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(8px);
+            transition: opacity .25s ease, transform .25s ease;
+        }
+
+        .guide-card.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .vehicle-title {
+            margin: 0;
+            color: #FFD700;
+            font-size: 12px;
+            letter-spacing: 0.7px;
+            font-weight: 700;
+        }
+
+        .vehicle-subtitle {
+            margin: 4px 0 10px 0;
+            color: #bdbdbd;
+            font-size: 10px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .guide-select-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .guide-select-wrap label {
+            font-size: 10px;
+            color: #b6b6b6;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        #dtcSelect {
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid #4a4a4a;
+            background: #111;
+            color: #FFD700;
+            padding: 0 10px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .guide-note {
+            margin: 8px 0 0 0;
+            font-size: 10px;
+            color: #a0a0a0;
+            line-height: 1.4;
+        }
+
+        .dtc-panel {
+            grid-column: 1 / -1;
+            grid-row: 1;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            padding: 14px;
+            border: 1px solid rgba(255, 215, 0, 0.72);
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(16,16,16,0.96), rgba(9,9,9,0.98));
+            z-index: 3;
+            color: #e6e6e6;
+            font-size: 12px;
+            line-height: 1.4;
+            box-sizing: border-box;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.42);
+            overflow-y: auto;
+            padding-bottom: 80px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 215, 0, 0.65) rgba(255, 255, 255, 0.08);
+        }
+
+        .dtc-panel::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .dtc-panel::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 999px;
+            margin: 8px 0;
+        }
+
+        .dtc-panel::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 0, 0.35);
+            border-radius: 999px;
+            border: none;
+            transition: background 0.2s ease;
+        }
+
+        .dtc-panel::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 215, 0, 0.55);
+        }
+
+        .dtc-panel::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+
+        .dtc-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            color: #f2cf67;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        .dtc-code {
+            color: #e98686;
+            font-weight: 700;
+        }
+
+        .dtc-title {
+            margin: 0 0 6px 0;
+            color: #f2f2f2;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .dtc-steps {
+            margin: 0;
+            padding-left: 16px;
+            color: #c9c9c9;
+        }
+
+        .dtc-steps li {
+            margin: 2px 0;
+        }
+
+        .quiz-wrap {
+            margin-top: 10px;
+            border-top: 1px dashed rgba(255, 215, 0, 0.35);
+            padding-top: 8px;
+        }
+
+        .quiz-title {
+            margin: 0 0 6px 0;
+            font-size: 11px;
+            color: #e6c978;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .manual-dtc-wrap {
+            margin-bottom: 8px;
+            display: none;
+            gap: 6px;
+        }
+
+        .manual-dtc-wrap.visible {
+            display: grid;
+        }
+
+        .manual-dtc-wrap label {
+            font-size: 10px;
+            color: #b0b0b0;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        #manualDtcSelect {
+            width: 100%;
+            max-width: 100%;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid rgba(221, 193, 112, 0.5);
+            background: #111;
+            color: #e8d6a2;
+            padding: 0 28px 0 10px;
+            font-size: 12px;
+            outline: none;
+            box-sizing: border-box;
+            display: block;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image:
+                linear-gradient(45deg, transparent 50%, #d8bb68 50%),
+                linear-gradient(135deg, #d8bb68 50%, transparent 50%);
+            background-position:
+                calc(100% - 14px) 14px,
+                calc(100% - 9px) 14px;
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+        }
+
+        #manualDtcSelect option,
+        #manualDtcSelect optgroup {
+            color: #d8d8d8;
+            background: #101010;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 6px;
+        }
+
+        .quiz-option {
+            border: 1px solid rgba(221, 193, 112, 0.4);
+            background: rgba(25, 25, 25, 0.95);
+            color: #dcdcdc;
+            border-radius: 10px;
+            padding: 8px;
+            font-size: 11px;
+            text-align: left;
+            cursor: pointer;
+            transition: background .2s ease, border-color .2s ease, color .2s ease;
+        }
+
+        .quiz-option.correct {
+            background: rgba(44, 185, 77, 0.20);
+            border-color: #2cb94d;
+            color: #c6ffd4;
+            display: none;
+        }
+
+        .quiz-option.wrong {
+            background: rgba(224, 63, 63, 0.20);
+            border-color: #e03f3f;
+            color: #ffd1d1;
+        }
+
+        .quiz-feedback {
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            min-height: 16px;
+        }
+
+        .repair-tutorial {
+            margin-top: 8px;
+            border: 1px solid rgba(94, 234, 128, 0.45);
+            border-radius: 10px;
+            background: rgba(18, 55, 26, 0.35);
+            padding: 8px;
+            display: none;
+            max-height: 180px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(124, 255, 157, 0.7) rgba(255, 255, 255, 0.08);
+        }
+
+        .repair-tutorial::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .repair-tutorial::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 999px;
+        }
+
+        .repair-tutorial::-webkit-scrollbar-thumb {
+            background: rgba(124, 255, 157, 0.38);
+            border-radius: 999px;
+            border: none;
+            transition: background 0.2s ease;
+        }
+
+        .repair-tutorial::-webkit-scrollbar-thumb:hover {
+            background: rgba(124, 255, 157, 0.6);
+        }
+
+        .repair-tutorial.visible {
+            display: block;
+        }
+
+        .repair-tutorial h4 {
+            margin: 0 0 6px 0;
+            color: #7cff9d;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .repair-tutorial ol {
+            margin: 0;
+            padding-left: 16px;
+            color: #d6ffe2;
+            font-size: 11px;
+            line-height: 1.35;
+        }
+
+        .repair-tutorial li {
+            margin: 2px 0;
+        }
+
+        .quiz-feedback.ok { color: #7fdea0; }
+        .quiz-feedback.bad { color: #f29999; }
 
         /* Bottom nav tabs */
         .wrapper > div:nth-child(1),
@@ -154,25 +472,23 @@
         .wrapper > div:nth-child(3),
         .wrapper > div:nth-child(4),
         .wrapper > div:nth-child(5) {
-            grid-row: 2;
+            grid-row: 3;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             margin: 0 !important;
-            padding: 0 !important;
-            border-radius: 0 !important;
-            background: linear-gradient(to top, #0a0a0a, #1a1a1a) !important;
-            border-right: 1px solid #FFD700;
-            border-top: 1px solid #FFD700;
-            border-left: none !important;
-            border-bottom: none !important;
-            font-size: 11px;
+            padding: 6px 4px !important;
+            border-radius: 10px !important;
+            background: linear-gradient(to top, #111, #1a1a1a) !important;
+            border: 1px solid rgba(255, 215, 0, 0.65) !important;
+            font-size: 10px;
             color: #FFD700;
             font-weight: 500;
-            height: 70px;
+            height: 72px;
             width: 100%;
             gap: 2px;
+            box-sizing: border-box;
         }
 
         .tab-value {
@@ -195,75 +511,73 @@
         }
 
         /* Status card */
-        .wrapper > div:nth-child(6) {
-            grid-column: 1 / -1;
-            grid-row: 1;
-            margin: 0;
-            margin-bottom: 90px;
-            padding: 8px 16px;
-            background: transparent !important;
-            border-top: 2px solid #FFD700 !important;
-            border-left: none !important;
-            border-right: none !important;
-            border-bottom: none !important;
-            border-radius: 50% 50% 50% 50%;
+        #statusCard {
+            grid-column: 1 / 4;
+            grid-row: 2;
+            margin: 0 !important;
+            padding: 10px 12px !important;
+            background: rgba(255, 215, 0, 0.08) !important;
+            border: 1px solid rgba(255, 215, 0, 0.65) !important;
+            border-radius: 12px !important;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: auto;
-            align-self: flex-end;
-            justify-self: center;
+            min-height: 52px;
             color: #FFD700 !important;
-            font-size: 14px !important;
-            font-weight: 500;
+            font-size: 12px !important;
+            font-weight: 600;
+            text-align: center;
+            box-sizing: border-box;
         }
 
         /* Connect button card */
         .wrapper > div:last-child {
-            grid-column: 1 / -1;
-            grid-row: 1;
-            margin: 0 !important;
-            padding: 12px 24px !important;
+            grid-column: 4 / 6;
+            grid-row: 2;
+            margin: 0 0 0 8px !important;
+            padding: 0 !important;
             background: linear-gradient(135deg, #FFD700, #FFA500) !important;
-            border-radius: 8px !important;
+            border-radius: 12px !important;
             border: none !important;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+            align-items: stretch;
+            justify-content: stretch;
             color: #000000 !important;
-            font-size: 16px !important;
-            font-weight: 600 !important;
+            min-height: 52px;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+            overflow: hidden;
         }
 
         /* Default wrapper div */
         .wrapper > div {
             background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
-            margin: 0 10px 0 10px;
-            padding: 1em;
+            margin: 0;
+            padding: 6px;
             border-radius: 10px;
             border: 1px solid #FFD700;
             color: #FFD700;
+            box-sizing: border-box;
         }
 
         .wrapper > div:first-child {
-            margin-top: 20px;
+            margin-top: 0;
         }
 
         #connectBtn {
             background: transparent;
             border: none;
             color: #000;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
             font-family: inherit;
             cursor: pointer;
             width: 100%;
+            height: 100%;
             text-align: center;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            padding: 0 6px;
         }
 
         #connectBtn:disabled {
@@ -324,6 +638,59 @@
         <div class="tab-unit">%</div>
     </div>
 
+    <div class="guide-card" id="guideCard">
+        <p class="vehicle-title">TOYOTA VIOS GEN 3 (2014) — AT</p>
+        <p class="vehicle-subtitle">DIY DTC Repair Assistant</p>
+
+        <div class="guide-select-wrap">
+            <label for="dtcSelect">Select a DTC code for a step-by-step repair guide</label>
+            <select id="dtcSelect">
+                <option value="">-- Select DTC Code --</option>
+                <option value="P0301">P0301 - Cylinder 1 Misfire</option>
+                <option value="P0420">P0420 - Catalyst Efficiency Low</option>
+                <option value="P0128">P0128 - Coolant Temp Below Thermostat Regulating Temp</option>
+                <option value="P0700">P0700 - Transmission Control System Malfunction</option>
+            </select>
+        </div>
+
+        <p class="guide-note">
+            Note: 3D model is currently unavailable. This screen focuses on practical step-by-step guidance
+            the user can follow for common DTC issues.
+        </p>
+    </div>
+
+    <div class="dtc-panel" id="dtcPanel">
+        <div class="dtc-head">
+            <span>DTC DIAGNOSTICS</span>
+            <span class="dtc-code" id="dtcCode">—</span>
+        </div>
+        <p class="dtc-title" id="dtcTitle">No fault code yet.</p>
+        <ol class="dtc-steps" id="dtcSteps">
+            <li>Connect OBD scanner to start reading DTC codes.</li>
+            <li>Select a DTC code below to view guided repair steps.</li>
+        </ol>
+
+        <div class="quiz-wrap" id="quizWrap">
+            <p class="quiz-title">Suggested action check</p>
+            <div class="manual-dtc-wrap">
+                <label for="manualDtcSelect">Manual DTC selection (always available)</label>
+                <select id="manualDtcSelect">
+                    <option value="">-- Select Manual DTC --</option>
+                    <option value="P0301">P0301 - Cylinder 1 Misfire</option>
+                    <option value="P0420">P0420 - Catalyst Efficiency Low</option>
+                    <option value="P0128">P0128 - Coolant Temp Below Thermostat Regulating Temp</option>
+                    <option value="P0700">P0700 - Transmission Control System Malfunction</option>
+                </select>
+            </div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-feedback" id="quizFeedback"></div>
+            <div class="repair-tutorial" id="repairTutorial">
+                <h4>Step-by-step repair tutorial</h4>
+                <ol id="repairSteps"></ol>
+            </div>
+        </div>
+    </div>
+
     <!-- Six: Status -->
     <div id="statusCard">No Device Connected</div>
 
@@ -348,6 +715,408 @@
 
 <script>
     const WS_URL = "ws://localhost:8765";
+
+    const DTC_LIBRARY = {
+        P0301: {
+            title: "Cylinder 1 Misfire Detected",
+            part: "engine",
+            steps: [
+                "Check if the spark plug on cylinder 1 is worn out or fouled.",
+                "Inspect ignition coil and wiring harness for loose or corroded connections.",
+                "Verify fuel injector pulse and spray pattern.",
+                "Run a compression test to rule out internal engine mechanical issues."
+            ],
+            quiz: {
+                prompt: "Which is the best first action for P0301?",
+                options: [
+                    "Check and replace spark plug/ignition components on cylinder 1",
+                    "Immediately replace the transmission assembly",
+                    "Ignore the code if engine still starts"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Turn off engine and let it cool. Disconnect negative battery terminal.",
+                "Locate cylinder 1 ignition coil and unplug the coil connector.",
+                "Remove coil bolt, pull out the coil, and inspect for cracks/carbon tracking.",
+                "Use spark plug socket to remove old plug and inspect electrode condition.",
+                "Install new spark plug with correct gap and torque to manufacturer spec.",
+                "Reinstall ignition coil, reconnect connector, then reconnect battery.",
+                "Clear DTC and perform road test. Re-scan to confirm P0301 is gone."
+            ]
+        },
+        P0420: {
+            title: "Catalyst System Efficiency Below Threshold",
+            part: "exhaust",
+            steps: [
+                "Inspect for exhaust leaks before the catalytic converter.",
+                "Check upstream and downstream O2 sensor live readings.",
+                "Confirm whether fuel trim is excessively rich or lean.",
+                "Evaluate catalytic converter condition and replace if needed."
+            ],
+            quiz: {
+                prompt: "For P0420, which is the correct diagnostic direction?",
+                options: [
+                    "Inspect O2 sensor behavior and check for exhaust leaks first",
+                    "Change engine oil only and clear all codes",
+                    "Replace battery terminals as main fix"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Raise vehicle safely using jack stands and inspect exhaust manifold-to-cat area.",
+                "Repair any exhaust leak before replacing sensors or catalytic converter.",
+                "Check live data of upstream/downstream O2 sensors using scanner.",
+                "If downstream sensor mirrors upstream rapidly, inspect catalyst efficiency.",
+                "Replace faulty O2 sensor if heater or signal response is out of spec.",
+                "If all sensors/wiring are good, replace catalytic converter assembly.",
+                "Clear code, perform drive cycle, and confirm no P0420 return."
+            ]
+        },
+        P0128: {
+            title: "Coolant Thermostat Temperature Below Regulating Temp",
+            part: "cooling",
+            steps: [
+                "Verify correct coolant level and inspect for leaks around radiator hoses.",
+                "Check upper radiator hose behavior during warm-up to detect a stuck-open thermostat.",
+                "Compare scanner coolant temperature reading against actual engine temperature behavior.",
+                "Replace thermostat and refill/bleed coolant if confirmed faulty."
+            ],
+            quiz: {
+                prompt: "For P0128, what is most likely needed?",
+                options: [
+                    "Thermostat and cooling system inspection",
+                    "Brake pad replacement",
+                    "Wheel alignment"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Ensure engine is cool. Open radiator cap carefully and check coolant level.",
+                "Drain coolant to a clean container from radiator drain plug.",
+                "Remove thermostat housing bolts and take out old thermostat.",
+                "Clean mating surfaces and install new thermostat with correct orientation.",
+                "Reinstall housing with new gasket and torque bolts evenly.",
+                "Refill coolant, bleed air from system, and monitor temperature rise.",
+                "Clear DTC and verify engine reaches normal operating temperature."
+            ]
+        },
+        P0700: {
+            title: "Transmission Control System Malfunction",
+            part: "transmission",
+            steps: [
+                "Check ATF level and color; if dark or burnt-smelling, service immediately.",
+                "Inspect transmission wiring harness and connectors for loose pins or corrosion.",
+                "Read the specific transmission sub-code using an advanced scan tool if available.",
+                "Avoid long-distance driving while transmission warning is active."
+            ],
+            quiz: {
+                prompt: "For P0700, what should be checked first?",
+                options: [
+                    "ATF condition and transmission-related sub-codes",
+                    "Spark plug gap as the only check",
+                    "Headlight bulb resistance"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Park on level ground, warm up transmission, and check ATF level per procedure.",
+                "Inspect ATF color/smell; if burnt, schedule fluid service immediately.",
+                "Inspect transmission harness and connector pins for corrosion or looseness.",
+                "Use scanner capable of TCM data to retrieve specific sub-codes.",
+                "Address sub-code root cause (solenoid, pressure control, speed sensor, etc.).",
+                "Clear codes and perform adaptive drive cycle.",
+                "Re-scan to confirm P0700 does not return."
+            ]
+        },
+        P0171: { title: "System Too Lean (Bank 1)", steps: ["Check intake leaks and vacuum hoses.", "Inspect MAF sensor data and clean sensor if needed.", "Check fuel pressure and injector condition."] },
+        P0172: { title: "System Too Rich (Bank 1)", steps: ["Inspect leaking injectors or high fuel pressure.", "Check MAF sensor contamination.", "Review short/long fuel trim values."] },
+        P0113: { title: "Intake Air Temperature Sensor High Input", steps: ["Check IAT sensor connector and wiring.", "Measure IAT resistance against temperature spec.", "Replace sensor if out of range."] },
+        P0102: { title: "MAF Sensor Low Input", steps: ["Check MAF connector and supply voltage.", "Inspect intake duct for leaks.", "Clean or replace MAF sensor as needed."] },
+        P0135: { title: "O2 Sensor Heater Circuit Malfunction (Bank1 Sensor1)", steps: ["Check heater circuit fuse and wiring.", "Measure O2 heater resistance.", "Replace sensor if heater is open."] },
+        P0141: { title: "O2 Sensor Heater Circuit Malfunction (Bank1 Sensor2)", steps: ["Inspect downstream O2 wiring.", "Check heater power and ground.", "Replace downstream O2 sensor if faulty."] },
+        P0401: { title: "EGR Flow Insufficient", steps: ["Inspect EGR passages for carbon blockage.", "Check EGR valve operation.", "Verify vacuum/control solenoid function."] },
+        P0500: { title: "Vehicle Speed Sensor Malfunction", steps: ["Inspect VSS wiring and connector.", "Check wheel speed / transmission output signal.", "Replace sensor if signal is missing."] },
+        P0505: { title: "Idle Control System Malfunction", steps: ["Inspect throttle body for carbon buildup.", "Check idle control learning/reset procedure.", "Inspect for vacuum leaks."] },
+        P0300: { title: "Random/Multiple Cylinder Misfire", steps: ["Inspect ignition coils and plugs across all cylinders.", "Check fuel pressure and injector balance.", "Check for intake leaks and compression issues."] },
+        P0302: { title: "Cylinder 2 Misfire Detected", steps: ["Inspect cylinder 2 plug and coil.", "Check injector pulse for cylinder 2.", "Run compression test on cylinder 2."] },
+        P0303: { title: "Cylinder 3 Misfire Detected", steps: ["Inspect cylinder 3 plug and coil.", "Check injector pulse for cylinder 3.", "Run compression test on cylinder 3."] },
+        P0304: { title: "Cylinder 4 Misfire Detected", steps: ["Inspect cylinder 4 plug and coil.", "Check injector pulse for cylinder 4.", "Run compression test on cylinder 4."] },
+        P0440: { title: "EVAP System Malfunction", steps: ["Check gas cap seal and fitment.", "Inspect EVAP hoses for cracks/leaks.", "Test purge/vent valve operation."] },
+        P0441: { title: "EVAP Incorrect Purge Flow", steps: ["Check purge valve stuck-open/stuck-closed.", "Inspect vacuum lines to purge system.", "Run EVAP smoke test if available."] },
+        P0455: { title: "EVAP Large Leak Detected", steps: ["Verify gas cap is tight and seal is good.", "Inspect EVAP canister and lines.", "Perform smoke leak test."] },
+        P0606: { title: "ECM/PCM Processor Fault", steps: ["Check battery voltage stability.", "Inspect ECM connectors and grounds.", "Reflash or replace ECM if fault persists."] },
+        U0100: { title: "Lost Communication With ECM/PCM", steps: ["Check CAN bus wiring integrity.", "Inspect ECM power/ground circuits.", "Scan all modules for network-related faults."] },
+
+        /* Underchassis / suspension / brake / steering focused codes */
+        C0035: {
+            title: "Front Left Wheel Speed Sensor Circuit",
+            steps: [
+                "Inspect front-left wheel speed sensor connector near knuckle.",
+                "Check wiring for cuts due to tire/suspension movement.",
+                "Clean tone ring / encoder area and remove metal debris.",
+                "Measure sensor resistance/signal and replace if out of spec."
+            ],
+            quiz: {
+                prompt: "For C0035, what is the best first step?",
+                options: [
+                    "Inspect front-left wheel speed sensor connector and wiring",
+                    "Replace catalytic converter first",
+                    "Change engine oil only"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Lift front-left side safely with jack stand and remove wheel.",
+                "Locate ABS wheel speed sensor at knuckle and unplug connector.",
+                "Check harness routing; repair damaged wire insulation or broken clips.",
+                "Clean sensor tip and tone ring area with non-residue cleaner.",
+                "Measure sensor resistance/output while spinning hub manually.",
+                "Replace sensor if no proper signal, then reinstall and secure harness.",
+                "Clear code and test-drive while monitoring wheel speed data."
+            ]
+        },
+        C0040: {
+            title: "Front Right Wheel Speed Sensor Circuit",
+            steps: [
+                "Inspect front-right speed sensor connector and harness.",
+                "Check sensor gap/tone ring contamination.",
+                "Repair any stretched or pinched wire near suspension travel.",
+                "Replace sensor if signal is unstable."
+            ],
+            quiz: {
+                prompt: "For C0040, what should be inspected first?",
+                options: [
+                    "Front-right wheel speed sensor and harness condition",
+                    "Radiator fan fuse",
+                    "Throttle body relearn only"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Secure vehicle and remove front-right wheel.",
+                "Unplug ABS sensor and inspect connector pins for corrosion.",
+                "Trace harness up to fender liner; repair damaged sections.",
+                "Clean magnetic pickup and tone ring.",
+                "Re-test live wheel speed during wheel spin.",
+                "Replace sensor if no/erratic signal then clear code.",
+                "Road-test with ABS data stream active."
+            ]
+        },
+        C1234: {
+            title: "Wheel Speed Sensor Rear Right Input Signal Missing",
+            steps: [
+                "Inspect rear-right wheel speed sensor mounting and connector.",
+                "Check for excessive wheel bearing play causing signal drop.",
+                "Inspect sensor ring for rust/cracks.",
+                "Replace faulty sensor or hub assembly as needed."
+            ],
+            quiz: {
+                prompt: "For rear wheel speed signal missing, what is correct first action?",
+                options: [
+                    "Inspect rear-right sensor, connector, and wheel bearing play",
+                    "Replace spark plugs immediately",
+                    "Drain transmission fluid first"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Raise rear-right side and secure with stands.",
+                "Remove wheel and inspect sensor harness along trailing arm.",
+                "Check connector lock and pin condition, clean as needed.",
+                "Spin hub and watch live speed reading on scanner.",
+                "If no signal and bearing has play/noise, replace hub assembly.",
+                "Reassemble, clear ABS code, and perform brake/ABS road check."
+            ]
+        },
+        C1241: {
+            title: "Low or High Power Supply Voltage (ABS ECU)",
+            steps: [
+                "Check battery voltage at rest and during engine start.",
+                "Inspect ABS fuse/relay and ground points.",
+                "Verify alternator charging output.",
+                "Repair power/ground issues before replacing modules."
+            ],
+            quiz: {
+                prompt: "For C1241, what should be checked first?",
+                options: [
+                    "Battery/charging system and ABS power-ground circuit",
+                    "Catalytic converter efficiency",
+                    "Fuel injector cleaning"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Measure battery voltage (engine off/on) using multimeter.",
+                "Perform cranking voltage drop test.",
+                "Inspect and tighten chassis grounds near battery/ABS unit.",
+                "Check ABS fuses and relays for heat damage/loose fit.",
+                "Confirm alternator charges within normal range.",
+                "Repair wiring/ground issues, clear code, and recheck."
+            ]
+        },
+        C1336: {
+            title: "Zero Point Calibration of Yaw Rate Sensor Incomplete",
+            steps: [
+                "Ensure steering wheel is centered and wheels are straight.",
+                "Perform zero-point calibration procedure using scan tool.",
+                "Check steering angle sensor values for drift.",
+                "Recalibrate after suspension/alignment work."
+            ],
+            quiz: {
+                prompt: "For C1336, which action is best?",
+                options: [
+                    "Run yaw/steering zero-point calibration correctly",
+                    "Replace all shock absorbers immediately",
+                    "Change brake pads only"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Park on level surface with straight wheels.",
+                "Check tire pressures and ensure no active ABS/VSC hard faults.",
+                "Use scan tool to run zero-point calibration routine.",
+                "Do not move steering wheel during calibration prompts.",
+                "Confirm steering angle and yaw values return near zero.",
+                "Clear code and perform low-speed steering validation."
+            ]
+        },
+        C1541: {
+            title: "EPS Motor/Signal Malfunction",
+            steps: [
+                "Check EPS motor connector and EPS ECU wiring.",
+                "Inspect charging voltage stability under steering load.",
+                "Scan EPS-specific data and freeze frame.",
+                "Replace EPS motor/assembly only after wiring/power checks pass."
+            ],
+            quiz: {
+                prompt: "For C1541, what should be done first?",
+                options: [
+                    "Inspect EPS wiring/voltage and scan EPS data",
+                    "Replace oxygen sensor first",
+                    "Replace thermostat first"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Check battery and charging system baseline voltage.",
+                "Inspect EPS harness/connectors for looseness or corrosion.",
+                "Read EPS DTC and data list (motor current, assist torque).",
+                "Perform steering load test while monitoring voltage drop.",
+                "Repair harness/power issue; if persistent, service EPS assembly.",
+                "Clear code and confirm assist returns normally."
+            ]
+        },
+        C1433: {
+            title: "Front Height Control Sensor Circuit (if equipped)",
+            steps: [
+                "Inspect front ride-height sensor link and connector.",
+                "Check for bent sensor arm from underchassis impact.",
+                "Verify sensor voltage sweep through suspension travel.",
+                "Replace damaged sensor or link rod."
+            ],
+            quiz: {
+                prompt: "If ride-height sensor code appears, first check?",
+                options: [
+                    "Sensor arm/link and connector condition",
+                    "Engine coolant thermostat",
+                    "Fuel rail pressure only"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Raise vehicle and inspect sensor link at suspension arm.",
+                "Reconnect/replace popped or bent linkage.",
+                "Check connector seals against water/dirt intrusion.",
+                "Measure output voltage while moving suspension slowly.",
+                "Replace sensor if voltage is erratic/dead spots present.",
+                "Calibrate ride-height value if required by scan tool."
+            ]
+        },
+        C1441: {
+            title: "Brake Switch Signal Circuit Malfunction",
+            steps: [
+                "Check brake light switch adjustment and operation.",
+                "Verify brake lights and switch signal at ECU data stream.",
+                "Inspect switch connector and pedal bracket alignment.",
+                "Replace brake switch if intermittent."
+            ],
+            quiz: {
+                prompt: "For brake switch malfunction, first action?",
+                options: [
+                    "Inspect brake switch adjustment and live signal",
+                    "Replace wheel bearing immediately",
+                    "Clean MAF sensor first"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Check if brake lights activate consistently with pedal press.",
+                "Inspect brake switch mounting at pedal bracket.",
+                "Adjust switch plunger clearance per service spec.",
+                "Monitor brake ON/OFF status via scanner while pressing pedal.",
+                "Replace switch if signal flickers or is inconsistent.",
+                "Clear DTC and re-test ABS/VSC operation."
+            ]
+        },
+        C2116: {
+            title: "ABS Pump Motor Relay / Motor Performance",
+            steps: [
+                "Inspect ABS pump relay and fuse condition.",
+                "Check pump motor current draw and wiring resistance.",
+                "Verify no severe brake fluid contamination/air.",
+                "Service ABS actuator if motor performance fails tests."
+            ],
+            quiz: {
+                prompt: "For ABS pump motor related fault, what first?",
+                options: [
+                    "Check relay/fuse and pump motor electrical performance",
+                    "Replace spark plugs first",
+                    "Do wheel alignment first"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Check ABS motor fuse and relay at fuse box.",
+                "Inspect relay socket for heat marks or loose contact.",
+                "Command ABS motor via scan tool (if supported) and listen response.",
+                "Measure voltage/current at pump connector during command.",
+                "If motor stalled/high current, service or replace ABS actuator.",
+                "Bleed brake system properly after hydraulic work."
+            ]
+        },
+        C1201: {
+            title: "Engine Control System Malfunction (Affects VSC/TRC)",
+            steps: [
+                "Read engine ECU DTCs first; this is often secondary.",
+                "Resolve primary engine fault (misfire, throttle, sensor).",
+                "After engine fix, clear all ABS/VSC related codes.",
+                "Re-test traction/stability operation."
+            ],
+            quiz: {
+                prompt: "For C1201, what is the correct strategy?",
+                options: [
+                    "Fix primary engine ECU code first, then clear C1201",
+                    "Replace all brake lines first",
+                    "Replace EPS motor first"
+                ],
+                correctIndex: 0
+            },
+            tutorial: [
+                "Scan ECM and note primary fault code causing C1201.",
+                "Diagnose and repair the main engine-related DTC.",
+                "Clear ECM and ABS/VSC codes together.",
+                "Perform short drive including turn/acceleration checks.",
+                "Confirm VSC/TRC lights stay off and no code returns."
+            ]
+        }
+    };
+
+    const EXTRA_DTC_CODES = [
+        "P0171","P0172","P0113","P0102","P0135","P0141","P0401","P0500","P0505",
+        "P0300","P0302","P0303","P0304","P0440","P0441","P0455","P0606","U0100",
+        "C0035","C0040","C1234","C1241","C1336","C1541","C1433","C1441","C2116","C1201"
+    ];
 
     const log = (msg) => {
         const el = document.getElementById("log");
@@ -406,6 +1175,8 @@
             await connectWS();
             setStatus("✅ Connected — initializing ELM327...");
             log("✅ WebSocket bridge connected");
+            document.getElementById("guideCard").classList.add("visible");
+            document.querySelector(".manual-dtc-wrap")?.classList.add("visible");
 
             await send("ATZ");      await delay(2000);
             await send("ATE0");     await delay(500);
@@ -421,6 +1192,20 @@
             const supported = await send("0100");
             log("Supported: " + supported);
             await delay(1000);
+
+            log("🧪 Running automatic multi-module DTC scan...");
+            const dtcCodes = await autoScanAllDTCs();
+
+            if (dtcCodes.length) {
+                log("🚨 DTC Found: " + dtcCodes.join(", "));
+                setStatus(`⚠️ Auto-scan detected ${dtcCodes.length} code(s)`);
+                showDtcDetails(dtcCodes[0]);
+                syncDtcSelect(dtcCodes[0]);
+                syncManualDtcSelect(dtcCodes[0]);
+            } else {
+                setStatus("✅ No stored DTC from scanned modules — manual code selection available");
+                updateDtcPanelManualFallback();
+            }
 
             setStatus("✅ ELM327 ready — polling live data...");
             log("📡 Starting live polling...");
@@ -527,6 +1312,332 @@
         }
         return null;
     }
+
+    function parseDTC(raw) {
+        if (!raw || raw.includes("NO DATA") || raw.includes("TIMEOUT")) return [];
+        const bytes = getBytes(raw);
+
+        // Generic OBD mode 03 positive response: 43
+        const idx = bytes.findIndex((b) => b === "43");
+        const start = idx >= 0 ? idx + 1 : 0;
+
+        const dtcs = [];
+        for (let i = start; i < bytes.length - 1; i += 2) {
+            const A = parseInt(bytes[i], 16);
+            const B = parseInt(bytes[i + 1], 16);
+            if (Number.isNaN(A) || Number.isNaN(B)) continue;
+            if (A === 0 && B === 0) continue;
+            dtcs.push(decodeDtc(A, B));
+        }
+        return [...new Set(dtcs)];
+    }
+
+    function parseCustomDTCFrame(raw, headerByte) {
+        if (!raw || raw.includes("NO DATA") || raw.includes("TIMEOUT")) return [];
+        const bytes = getBytes(raw);
+        const idx = bytes.findIndex((b) => b === headerByte);
+        if (idx < 0) return [];
+
+        const dtcs = [];
+        for (let i = idx + 1; i < bytes.length - 1; i += 2) {
+            const A = parseInt(bytes[i], 16);
+            const B = parseInt(bytes[i + 1], 16);
+            if (Number.isNaN(A) || Number.isNaN(B)) continue;
+            if (A === 0 && B === 0) continue;
+            dtcs.push(decodeDtc(A, B));
+        }
+        return [...new Set(dtcs)];
+    }
+
+    async function autoScanAllDTCs() {
+        const all = new Set();
+
+        // 1) Standard powertrain stored DTCs (safe)
+        try {
+            const mode03 = await send("03");
+            parseDTC(mode03).forEach(c => all.add(c));
+        } catch (e) {
+            log("⚠️ Mode 03 scan failed: " + e.message);
+        }
+
+        // 2) Optional extended read — KEEP THIS LIGHT to avoid breaking live PID polling on some ELM clones
+        // IMPORTANT: do not leave custom header active. Always restore 7DF after probing.
+        const extendedRequests = [
+            "AT SH 7E0",
+            "19 02 AF",
+            "AT SH 7E1",
+            "19 02 AF",
+            "AT SH 7B0",
+            "19 02 AF"
+        ];
+
+        for (const cmd of extendedRequests) {
+            try {
+                const resp = await send(cmd);
+                parseDTC(resp).forEach(c => all.add(c));
+                ["59", "47", "43"].forEach(h => {
+                    parseCustomDTCFrame(resp, h).forEach(c => all.add(c));
+                });
+            } catch (_) {}
+            await delay(100);
+        }
+
+        // restore functional header + protocol auto before live PID polling
+        try { await send("AT SH 7DF"); } catch (_) {}
+        try { await send("ATSP0"); } catch (_) {}
+        await delay(100);
+
+        // 3) Normalize: keep only valid 5-char DTC format; prefer known library codes
+        const valid = [...all].filter(c => /^[PCBU][0-9A-F]{4}$/.test(c));
+        const known = valid.filter(c => !!DTC_LIBRARY[c]);
+        return known.length ? [...new Set(known)] : [...new Set(valid)];
+    }
+
+    function decodeDtc(A, B) {
+        const first = (A & 0xC0) >> 6;
+        const family = ["P", "C", "B", "U"][first];
+        const d1 = ((A & 0x30) >> 4).toString(16).toUpperCase();
+        const d2 = (A & 0x0F).toString(16).toUpperCase();
+        const d3 = ((B & 0xF0) >> 4).toString(16).toUpperCase();
+        const d4 = (B & 0x0F).toString(16).toUpperCase();
+        return `${family}${d1}${d2}${d3}${d4}`;
+    }
+
+    function showDtcDetails(code) {
+        const detail = DTC_LIBRARY[code] || {
+            title: "Unknown DTC",
+            steps: [
+                "Record freeze-frame at live data values.",
+                "Inspect related wiring/connectors visually.",
+                "Run pinpoint test per service manual.",
+                "Clear code and re-test after repair."
+            ]
+        };
+
+        document.getElementById("dtcCode").textContent = code;
+        document.getElementById("dtcTitle").textContent = detail.title;
+
+        const stepsEl = document.getElementById("dtcSteps");
+        stepsEl.innerHTML = "";
+        detail.steps.forEach((step) => {
+            const li = document.createElement("li");
+            li.textContent = step;
+            stepsEl.appendChild(li);
+        });
+
+        renderQuiz(code, detail);
+    }
+
+    function updateDtcPanelEmpty() {
+        document.getElementById("dtcCode").textContent = "—";
+        document.getElementById("dtcTitle").textContent = "No fault code found.";
+        const stepsEl = document.getElementById("dtcSteps");
+        stepsEl.innerHTML = "";
+        [
+            "System currently reports no stored DTC.",
+            "Continue monitoring live sensors while driving.",
+            "If Check Engine appears, scan again."
+        ].forEach((step) => {
+            const li = document.createElement("li");
+            li.textContent = step;
+            stepsEl.appendChild(li);
+        });
+
+        renderQuiz("", null);
+    }
+
+    function updateDtcPanelManualFallback() {
+        document.getElementById("dtcCode").textContent = "—";
+        document.getElementById("dtcTitle").textContent = "No ECU fault code currently stored.";
+        const stepsEl = document.getElementById("dtcSteps");
+        stepsEl.innerHTML = "";
+        [
+            "You can still use Manual DTC Selection below for preventive checks.",
+            "Select a known Vios 2014 AT related DTC to view possible fixes.",
+            "Use this as guidance; confirm final diagnosis with proper testing."
+        ].forEach((step) => {
+            const li = document.createElement("li");
+            li.textContent = step;
+            stepsEl.appendChild(li);
+        });
+
+        renderQuiz("", null);
+    }
+
+    function syncDtcSelect(code) {
+        const select = document.getElementById("dtcSelect");
+        if (!select) return;
+        const hasOption = Array.from(select.options).some(opt => opt.value === code);
+        if (hasOption) select.value = code;
+    }
+
+    function renderQuiz(code, detail) {
+        const quizOptionsEl = document.getElementById("quizOptions");
+        const quizFeedbackEl = document.getElementById("quizFeedback");
+        const quizTitleEl = document.querySelector(".quiz-title");
+
+        quizOptionsEl.innerHTML = "";
+        quizFeedbackEl.textContent = "";
+        quizFeedbackEl.className = "quiz-feedback";
+
+        const tutorialWrap = document.getElementById("repairTutorial");
+        const tutorialSteps = document.getElementById("repairSteps");
+        tutorialWrap.classList.remove("visible");
+        tutorialSteps.innerHTML = "";
+
+        if (!detail || !detail.quiz) {
+            quizTitleEl.textContent = "Suggested action check";
+            const empty = document.createElement("div");
+            empty.style.color = "#9a9a9a";
+            empty.style.fontSize = "11px";
+            empty.textContent = code ? "No quiz available for this DTC yet." : "Connect and select a DTC to start the suggestion check.";
+            quizOptionsEl.appendChild(empty);
+            return;
+        }
+
+        quizTitleEl.textContent = detail.quiz.prompt;
+
+        detail.quiz.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "quiz-option";
+            btn.textContent = opt;
+
+            btn.addEventListener("click", () => {
+                const all = quizOptionsEl.querySelectorAll(".quiz-option");
+                all.forEach(b => b.classList.remove("correct", "wrong"));
+
+                if (idx === detail.quiz.correctIndex) {
+                    btn.classList.add("correct");
+                    quizFeedbackEl.textContent = "Correct suggestion selected.";
+                    quizFeedbackEl.className = "quiz-feedback ok";
+
+                    const steps = detail.tutorial || [
+                        "Prepare tools and safety gear before starting.",
+                        "Inspect related component and wiring carefully.",
+                        "Replace or repair the faulty part based on service manual.",
+                        "Clear DTC and run verification drive cycle."
+                    ];
+                    tutorialSteps.innerHTML = "";
+                    steps.forEach((step) => {
+                        const li = document.createElement("li");
+                        li.textContent = step;
+                        tutorialSteps.appendChild(li);
+                    });
+                    tutorialWrap.classList.add("visible");
+                } else {
+                    btn.classList.add("wrong");
+                    quizFeedbackEl.textContent = "Incorrect selection. Try the best diagnostic first step.";
+                    quizFeedbackEl.className = "quiz-feedback bad";
+                    tutorialWrap.classList.remove("visible");
+                    tutorialSteps.innerHTML = "";
+                }
+            });
+
+            quizOptionsEl.appendChild(btn);
+        });
+    }
+
+    document.getElementById("dtcSelect").addEventListener("change", (e) => {
+        const code = e.target.value;
+        if (!code) {
+            updateDtcPanelEmpty();
+            return;
+        }
+        showDtcDetails(code);
+        syncManualDtcSelect(code);
+        setStatus(`📘 Manual guide loaded for ${code}`);
+        log(`ℹ️ Manual guide selected: ${code}`);
+    });
+
+    document.getElementById("manualDtcSelect").addEventListener("change", (e) => {
+        const code = e.target.value;
+        if (!code) return;
+        showDtcDetails(code);
+        syncDtcSelect(code);
+        setStatus(`📘 Manual DTC selected: ${code}`);
+        log(`ℹ️ Manual DTC selected: ${code}`);
+    });
+
+    function syncManualDtcSelect(code) {
+        const select = document.getElementById("manualDtcSelect");
+        if (!select) return;
+        const hasOption = Array.from(select.options).some(opt => opt.value === code);
+        if (hasOption) select.value = code;
+    }
+
+    function appendExtendedDtcOptions() {
+        const dtcSelect = document.getElementById("dtcSelect");
+        const manualSelect = document.getElementById("manualDtcSelect");
+        if (dtcSelect) appendFlatOptions(dtcSelect);
+        if (manualSelect) appendGroupedOptions(manualSelect);
+    }
+
+    function appendFlatOptions(select) {
+        EXTRA_DTC_CODES.forEach((code) => {
+            const exists = Array.from(select.options).some(o => o.value === code);
+            if (exists) return;
+            const option = document.createElement("option");
+            option.value = code;
+            option.textContent = `${code} - ${DTC_LIBRARY[code]?.title || "General Diagnostic Code"}`;
+            select.appendChild(option);
+        });
+    }
+
+    function appendGroupedOptions(select) {
+        const existing = Array.from(select.options).map(o => o.value);
+        const groups = [
+            {
+                label: "ENGINE / EMISSIONS",
+                codes: [
+                    "P0300","P0301","P0302","P0303","P0304",
+                    "P0102","P0113","P0128","P0135","P0141",
+                    "P0171","P0172","P0401","P0420",
+                    "P0440","P0441","P0455","P0505","P0606"
+                ]
+            },
+            {
+                label: "TRANSMISSION / DRIVETRAIN",
+                codes: ["P0700","P0500"]
+            },
+            {
+                label: "UNDERCHASSIS / BRAKE / STEERING",
+                codes: ["C0035","C0040","C1234","C1241","C1336","C1433","C1441","C1541","C2116","C1201"]
+            },
+            {
+                label: "NETWORK / COMMUNICATION",
+                codes: ["U0100"]
+            }
+        ];
+
+        groups.forEach((group) => {
+            const optgroup = document.createElement("optgroup");
+            optgroup.label = group.label;
+
+            group.codes.forEach((code) => {
+                if (existing.includes(code)) return;
+                const option = document.createElement("option");
+                option.value = code;
+                option.textContent = `${code} - ${DTC_LIBRARY[code]?.title || "General Diagnostic Code"}`;
+                optgroup.appendChild(option);
+            });
+
+            if (optgroup.children.length > 0) {
+                select.appendChild(optgroup);
+            }
+        });
+
+        EXTRA_DTC_CODES.forEach((code) => {
+            const alreadyExists = Array.from(select.querySelectorAll("option")).some(o => o.value === code);
+            if (alreadyExists) return;
+            const option = document.createElement("option");
+            option.value = code;
+            option.textContent = `${code} - ${DTC_LIBRARY[code]?.title || "General Diagnostic Code"}`;
+            select.appendChild(option);
+        });
+    }
+
+    appendExtendedDtcOptions();
 </script>
 
 </body>

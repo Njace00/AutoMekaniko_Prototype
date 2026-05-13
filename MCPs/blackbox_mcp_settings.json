@@ -1,0 +1,58 @@
+{
+  "mcpServers": {
+    "github.com/ahujasid/blender-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "%USERPROFILE%\\.local\\bin\\uvx.exe",
+        "blender-mcp"
+      ]
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/memory": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/git": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-git"
+      ]
+    },
+    "github.com/microsoft/playwright-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    },
+    "github.com/mobile-next/mobile-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@mobilenext/mobile-mcp@latest"
+      ]
+    },
+    "github.com/GLips/Figma-Context-MCP": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "figma-developer-mcp",
+        "--stdio"
+      ]
+    }
+  }
+}
